@@ -13,5 +13,12 @@ namespace AcuCafeTests
         {
             AcuCafe.OrderDrink("Espresso", false, false);
         }
+
+        [TestMethod]
+        public void TestEspressoPrice()
+        {
+            Drink d = AcuCafe.OrderDrink("Espresso", false, false);
+            Assert.AreEqual(d.Cost(), 1.8);
+        }
     }
 }
