@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AcuCafe
 {
     public class AcuCafe
     {
-        public static Drink OrderDrink(string type, bool hasMilk, bool hasSugar)
+        public static IDrink OrderDrink(string type, bool hasMilk, bool hasSugar)
         {
-            Drink drink = new Drink();
-            if (type == "Expresso")
+            IDrink drink = new Drink();
+            if (type == "Espresso")
             {
-                drink = new Expresso();
+                drink = new Espresso();
             }
             else if (type == "HotTea")
                 drink = new Tea();
@@ -18,9 +20,9 @@ namespace AcuCafe
 
             try
             {
-                drink.HasMilk = hasMilk;
-                drink.HasSugar = hasSugar;
-                drink.Prepare(type);
+                //drink.HasMilk = hasMilk;
+                //drink.HasSugar = hasSugar;
+                DrinkPreparer.Prepare(drink);
             }
             catch (Exception ex)
             {
@@ -32,45 +34,136 @@ namespace AcuCafe
         }
     }
 
-    public class Drink
+    public static class DrinkFactory
     {
+        private static readonly Dictionary<string, Type> DrinkTypes = new Dictionary<string, Type>();
+
+        public static IDrink Create(string drinkName, params IDrinkIngredient[] ingredients)
+        {
+            if (DrinkTypes.ContainsKey(drinkName))
+            {
+                return (IDrink)Activator.CreateInstance(DrinkTypes[drinkName]);
+            }
+
+            // Fallback code in case the classes are not registered
+            switch (drinkName)
+            {
+                case "Espresso":
+                    return new Espresso();
+                case "HotTea":
+                    return new Tea();
+                case "IceTea":
+                    return new IceTea();
+                default:
+                    return new Drink();
+            }
+        }
+
+        public static void RegisterDrink(string name, Type t)
+        {
+            if (t.GetInterfaces().Contains(typeof(IDrink)))
+            {
+                DrinkTypes[name] = t;
+            }
+            else
+            {
+                throw new Exception("Cannot register drink that does not implement IDrink interface");
+            }
+        }
+    }
+
+    public static class DrinkPreparer
+    {
+        public static void Prepare(IDrink drink)
+        {
+
+            string message = "We are preparing the following drink for you: " + drink.Name;
+            /*if (drink.HasMilk)
+                message += " with milk";
+            else
+                message += " without milk";
+
+            if (drink.HasSugar)
+                message += " with sugar";
+            else
+                message += " without sugar";
+                */
+            Console.WriteLine(message);
+        }
+    }
+
+
+    public interface IDrink
+    {
+        string Name { get; }
+        double Cost();
+
+        void AddIngredient(IDrinkIngredient ingredient);
+    }
+
+    public interface IDrinkIngredient
+    {
+        string Name { get; }
+        double Cost();
+    }
+
+    public class Drink : IDrink
+    {
+        static Drink()
+        {
+            AllowedIngredients = new List<string>();
+        }
+
+        public Drink()
+        {
+            _ingredients = new List<IDrinkIngredient>();
+        }
+
+        public Drink(string name, double cost) : this()
+        {
+            Name = name;
+            _cost = cost;
+        }
+
+        protected static List<string> AllowedIngredients { get; }
+
+        private readonly double _cost;
+        private readonly List<IDrinkIngredient> _ingredients;
+
         public const double MilkCost = 0.5;
         public const double SugarCost = 0.5;
 
         public bool HasMilk { get; set; }
 
         public bool HasSugar { get; set; }
-        public string Description { get; }
+        public string Name { get; }
 
         public double Cost()
         {
-            return 0;
+            return _cost + _ingredients.Sum(i => i.Cost());
         }
 
-        public void Prepare(string drink)
+        public void AddIngredient(IDrinkIngredient ingredient)
         {
-            string message = "We are preparing the following drink for you: " + Description;
-            if (HasMilk)
-                message += "with milk";
-            else
-                message += "without milk";
+            _ingredients.Add(ingredient);
 
-            if (HasSugar)
-                message += "with sugar";
-            else
-                message += "without sugar";
-
-            Console.WriteLine(message);
+            // Check if we added something wrong
+            if(!AllowedIngredients.Contains(ingredient.Name))
+                throw new Exception("We just ruined the " + Name + "by adding " + ingredient.Name);
         }
     }
 
-    public class Expresso : Drink
+    public class Espresso : Drink
     {
-        public new string Description
+        static Espresso()
         {
-            get { return "Expresso"; }
+            AllowedIngredients.Add("milk");
+            AllowedIngredients.Add("sugar");
         }
 
+        public Espresso() : base("Espresso", 1.8)
+        { }
+        
         public new double Cost()
         {
             double cost = 1.8;
