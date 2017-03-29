@@ -39,7 +39,7 @@ namespace AcuCafeTests
         public void TestEspressoWithMilkAndSugar()
         {
             IDrink d = AcuCafe.OrderDrink("Espresso", true, true);
-            Assert.AreEqual(2.3, d.Cost());
+            Assert.AreEqual(2.8, d.Cost());
         }
     }
 }

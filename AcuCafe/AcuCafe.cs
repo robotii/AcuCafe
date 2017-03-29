@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AcuCafe
 {
@@ -8,15 +9,13 @@ namespace AcuCafe
     {
         public static IDrink OrderDrink(string type, bool hasMilk, bool hasSugar)
         {
-            IDrink drink = new Drink();
-            if (type == "Espresso")
-            {
-                drink = new Espresso();
-            }
-            else if (type == "HotTea")
-                drink = new Tea();
-            else if (type == "IceTea")
-                drink = new IceTea();
+            IDrink drink = DrinkFactory.Create(type);
+
+            if (hasMilk)
+                drink.AddIngredient(new DrinkIngredient("milk", 0.5));
+
+            if (hasSugar)
+                drink.AddIngredient(new DrinkIngredient("sugar", 0.5));
 
             try
             {
@@ -107,6 +106,23 @@ namespace AcuCafe
         double Cost();
     }
 
+    public class DrinkIngredient : IDrinkIngredient
+    {
+        private double _cost;
+        public string Name { get; }
+
+        public DrinkIngredient(string name, double cost)
+        {
+            Name = name;
+            _cost = cost;
+        }
+
+        public double Cost()
+        {
+            return _cost;
+        }
+    }
+
     public class Drink : IDrink
     {
         static Drink()
@@ -148,7 +164,7 @@ namespace AcuCafe
             _ingredients.Add(ingredient);
 
             // Check if we added something wrong
-            if(!AllowedIngredients.Contains(ingredient.Name))
+            if (!AllowedIngredients.Contains(ingredient.Name))
                 throw new Exception("We just ruined the " + Name + "by adding " + ingredient.Name);
         }
     }
@@ -163,19 +179,6 @@ namespace AcuCafe
 
         public Espresso() : base("Espresso", 1.8)
         { }
-        
-        public new double Cost()
-        {
-            double cost = 1.8;
-
-            if (HasMilk)
-                cost += MilkCost;
-
-            if (HasSugar)
-                cost += SugarCost;
-
-            return cost;
-        }
     }
 
     public class Tea : Drink
