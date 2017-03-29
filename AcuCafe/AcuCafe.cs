@@ -7,6 +7,13 @@ namespace AcuCafe
 {
     public class AcuCafe
     {
+        static AcuCafe()
+        {
+            
+            DrinkFactory.RegisterDrink("HotTea", typeof(Tea));
+            DrinkFactory.RegisterDrink("IceTea", typeof(IceTea));
+        }
+
         public static IDrink OrderDrink(string type, bool hasMilk, bool hasSugar)
         {
             IDrink drink = DrinkFactory.Create(type);
@@ -165,7 +172,7 @@ namespace AcuCafe
 
             // Check if we added something wrong
             if (!AllowedIngredients.Contains(ingredient.Name))
-                throw new Exception("We just ruined the " + Name + "by adding " + ingredient.Name);
+                throw new Exception("We just ruined the " + Name + " by adding " + ingredient.Name);
         }
     }
 
@@ -173,6 +180,8 @@ namespace AcuCafe
     {
         static Espresso()
         {
+            DrinkFactory.RegisterDrink("Espresso", typeof(Espresso));
+
             AllowedIngredients.Add("milk");
             AllowedIngredients.Add("sugar");
         }
