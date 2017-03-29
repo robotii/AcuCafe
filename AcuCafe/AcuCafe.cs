@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace AcuCafe
 {
@@ -70,17 +69,7 @@ namespace AcuCafe
         public static void Prepare(IDrink drink)
         {
 
-            string message = "We are preparing the following drink for you: " + drink.Name;
-            /*if (drink.HasMilk)
-                message += " with milk";
-            else
-                message += " without milk";
-
-            if (drink.HasSugar)
-                message += " with sugar";
-            else
-                message += " without sugar";
-                */
+            string message = "We are preparing the following drink for you: " + drink.Description;
             Console.WriteLine(message);
         }
     }
@@ -92,6 +81,7 @@ namespace AcuCafe
         double Cost();
 
         void AddIngredient(IDrinkIngredient ingredient);
+        string Description { get; }
     }
 
     public interface IDrinkIngredient
@@ -140,17 +130,20 @@ namespace AcuCafe
         private readonly double _cost;
         private readonly List<IDrinkIngredient> _ingredients;
 
-        public const double MilkCost = 0.5;
-        public const double SugarCost = 0.5;
-
-        public bool HasMilk { get; set; }
-
-        public bool HasSugar { get; set; }
         public string Name { get; }
 
         public double Cost()
         {
             return _cost + _ingredients.Sum(i => i.Cost());
+        }
+
+        public string Description
+        {
+            get
+            {
+                return AllowedIngredients.Aggregate(Name, (current, allowedIngredient) 
+                    => current + (_ingredients.Exists(item => item.Name == allowedIngredient) ? " with " : " without ") + allowedIngredient);
+            }
         }
 
         public void AddIngredient(IDrinkIngredient ingredient)
