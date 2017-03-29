@@ -9,7 +9,7 @@ namespace AcuCafe
     {
         static AcuCafe()
         {
-            
+            DrinkFactory.RegisterDrink("Espresso", typeof(Espresso));
             DrinkFactory.RegisterDrink("HotTea", typeof(Tea));
             DrinkFactory.RegisterDrink("IceTea", typeof(IceTea));
         }
@@ -26,8 +26,6 @@ namespace AcuCafe
 
             try
             {
-                //drink.HasMilk = hasMilk;
-                //drink.HasSugar = hasSugar;
                 DrinkPreparer.Prepare(drink);
             }
             catch (Exception ex)
@@ -44,25 +42,14 @@ namespace AcuCafe
     {
         private static readonly Dictionary<string, Type> DrinkTypes = new Dictionary<string, Type>();
 
-        public static IDrink Create(string drinkName, params IDrinkIngredient[] ingredients)
+        public static IDrink Create(string drinkName)
         {
             if (DrinkTypes.ContainsKey(drinkName))
             {
                 return (IDrink)Activator.CreateInstance(DrinkTypes[drinkName]);
             }
 
-            // Fallback code in case the classes are not registered
-            switch (drinkName)
-            {
-                case "Espresso":
-                    return new Espresso();
-                case "HotTea":
-                    return new Tea();
-                case "IceTea":
-                    return new IceTea();
-                default:
-                    return new Drink();
-            }
+            return new Drink();
         }
 
         public static void RegisterDrink(string name, Type t)
@@ -115,7 +102,7 @@ namespace AcuCafe
 
     public class DrinkIngredient : IDrinkIngredient
     {
-        private double _cost;
+        private readonly double _cost;
         public string Name { get; }
 
         public DrinkIngredient(string name, double cost)
@@ -180,8 +167,6 @@ namespace AcuCafe
     {
         static Espresso()
         {
-            DrinkFactory.RegisterDrink("Espresso", typeof(Espresso));
-
             AllowedIngredients.Add("milk");
             AllowedIngredients.Add("sugar");
         }
@@ -192,43 +177,25 @@ namespace AcuCafe
 
     public class Tea : Drink
     {
-        public new string Description
+        static Tea()
         {
-            get { return "Hot tea"; }
+            AllowedIngredients.Add("milk");
+            AllowedIngredients.Add("sugar");
         }
 
-        public new double Cost()
-        {
-            double cost = 1;
-
-            if (HasMilk)
-                cost += MilkCost;
-
-            if (HasSugar)
-                cost += SugarCost;
-
-            return cost;
-        }
+        public Tea() : base("Hot tea", 1.0)
+        { }
     }
 
     public class IceTea : Drink
     {
-        public new string Description
+
+        static IceTea()
         {
-            get { return "Ice tea"; }
+            AllowedIngredients.Add("milk");
+            AllowedIngredients.Add("sugar");
         }
-
-        public new double Cost()
-        {
-            double cost = 1.5;
-
-            if (HasMilk)
-                cost += MilkCost;
-
-            if (HasSugar)
-                cost += SugarCost;
-
-            return cost;
-        }
+        public IceTea() : base("Ice tea", 1.5)
+        { }
     }
 }
