@@ -6,11 +6,11 @@ using AcuCafe.interfaces;
 
 namespace AcuCafe
 {
-    public class DrinkIngredientFactory
+    public class DrinkIngredientFactory : IDrinkIngredientFactory
     {
         private static readonly Dictionary<string, Type> DrinkTypes = new Dictionary<string, Type>();
 
-        public static IDrinkIngredient Create(string drinkName)
+        public IDrinkIngredient Create(string drinkName)
         {
             if (DrinkTypes.ContainsKey(drinkName))
             {
@@ -20,7 +20,7 @@ namespace AcuCafe
             return new DrinkIngredient("unknown", 0.0);
         }
 
-        public static void RegisterDrinkIngredient(string name, Type t)
+        public void RegisterDrinkIngredient(string name, Type t)
         {
             if (t.GetInterfaces().Contains(typeof(IDrinkIngredient)))
             {

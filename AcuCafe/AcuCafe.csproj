@@ -51,7 +51,9 @@
     <Compile Include="ingredients\MilkIngredient.cs" />
     <Compile Include="ingredients\SugarIngredient.cs" />
     <Compile Include="interfaces\IDrink.cs" />
+    <Compile Include="interfaces\IDrinkFactory.cs" />
     <Compile Include="interfaces\IDrinkIngredient.cs" />
+    <Compile Include="interfaces\IDrinkIngredientFactory.cs" />
     <Compile Include="interfaces\IDrinkValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="drinks\Tea.cs" />

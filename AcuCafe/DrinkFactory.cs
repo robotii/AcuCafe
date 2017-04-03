@@ -6,25 +6,25 @@ using AcuCafe.interfaces;
 
 namespace AcuCafe
 {
-    public static class DrinkFactory
+    public class DrinkFactory : IDrinkFactory
     {
-        private static readonly Dictionary<string, Type> DrinkTypes = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _drinkTypes = new Dictionary<string, Type>();
 
-        public static IDrink Create(string drinkName)
+        public IDrink Create(string drinkName)
         {
-            if (DrinkTypes.ContainsKey(drinkName))
+            if (_drinkTypes.ContainsKey(drinkName))
             {
-                return (IDrink)Activator.CreateInstance(DrinkTypes[drinkName]);
+                return (IDrink)Activator.CreateInstance(_drinkTypes[drinkName]);
             }
 
             return new Drink();
         }
 
-        public static void RegisterDrink(string name, Type t)
+        public void RegisterDrink(string name, Type t)
         {
             if (t.GetInterfaces().Contains(typeof(IDrink)))
             {
-                DrinkTypes[name] = t;
+                _drinkTypes[name] = t;
             }
             else
             {

@@ -8,47 +8,42 @@ namespace AcuCafe
 {
     public class AcuCafe
     {
-        static AcuCafe()
-        {
-            DrinkFactory.RegisterDrink("Espresso", typeof(Espresso));
-            DrinkFactory.RegisterDrink("HotTea", typeof(Tea));
-            DrinkFactory.RegisterDrink("IceTea", typeof(IceTea));
+        private readonly IDrinkFactory _drinkFactory;
+        private readonly IDrinkIngredientFactory _drinkIngredientFactory;
 
-            DrinkIngredientFactory.RegisterDrinkIngredient("milk", typeof(MilkIngredient));
-            DrinkIngredientFactory.RegisterDrinkIngredient("sugar", typeof(SugarIngredient));
+        public AcuCafe(IDrinkFactory df, IDrinkIngredientFactory dif)
+        {
+            _drinkFactory = df;
+            _drinkIngredientFactory = dif;
+
+            _drinkFactory.RegisterDrink("Espresso", typeof(Espresso));
+            _drinkFactory.RegisterDrink("HotTea", typeof(Tea));
+            _drinkFactory.RegisterDrink("IceTea", typeof(IceTea));
+
+            _drinkIngredientFactory.RegisterDrinkIngredient("milk", typeof(MilkIngredient));
+            _drinkIngredientFactory.RegisterDrinkIngredient("sugar", typeof(SugarIngredient));
         }
 
         [Obsolete("Please use OrderDrink(string, IEnumerable<string>) instead")]
         public static IDrink OrderDrink(string type, bool hasMilk, bool hasSugar)
         {
-            IDrink drink = DrinkFactory.Create(type);
+            AcuCafe cafe = new AcuCafe(new DrinkFactory(), new DrinkIngredientFactory());
+            List<string> ingredients = new List<string>();
+            if(hasMilk)
+                ingredients.Add("milk");
+            if(hasSugar)
+                ingredients.Add("sugar");
 
-            if (hasMilk)
-                drink.AddIngredient(DrinkIngredientFactory.Create("milk"));
-
-            if (hasSugar)
-                drink.AddIngredient(DrinkIngredientFactory.Create("sugar"));
-
-            try
-            {
-                DrinkPreparer.Prepare(drink);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("We are unable to prepare your drink.");
-                System.IO.File.WriteAllText(@"c:\Error.txt", ex.ToString());
-            }
-
-            return drink;
+            return cafe.OrderDrink(type, ingredients);
         }
 
-        public static IDrink OrderDrink(string drinkType, IEnumerable<string> ingredients)
+        public IDrink OrderDrink(string drinkType, IEnumerable<string> ingredients)
         {
-            IDrink drink = DrinkFactory.Create(drinkType);
+            IDrink drink = _drinkFactory.Create(drinkType);
 
             foreach (string ingredient in ingredients)
             {
-                drink.AddIngredient(DrinkIngredientFactory.Create(ingredient));
+                drink.AddIngredient(_drinkIngredientFactory.Create(ingredient));
             }
 
             try
