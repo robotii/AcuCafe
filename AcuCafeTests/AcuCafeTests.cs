@@ -21,7 +21,7 @@ namespace AcuCafeTests
         {
             _drinkFactory = new DrinkFactory();
             _drinkIngredientFactory = new DrinkIngredientFactory();
-            _baristaInformer = new BaristaInformer();
+            _baristaInformer = new TestBaristaInformer();
         }
 
         [TestMethod]

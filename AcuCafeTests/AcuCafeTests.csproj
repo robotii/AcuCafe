@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AcuCafeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBaristaInformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcuCafe\AcuCafe.csproj">
