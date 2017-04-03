@@ -51,6 +51,12 @@ namespace AcuCafe
             return cafe.OrderDrink(type, ingredients);
         }
 
+        /// <summary>
+        /// Order a drink, given a type and list of ingredients
+        /// </summary>
+        /// <param name="drinkType"></param>
+        /// <param name="ingredients"></param>
+        /// <returns></returns>
         public IDrink OrderDrink(string drinkType, IEnumerable<string> ingredients)
         {
             IDrink drink = _drinkFactory.Create(drinkType);

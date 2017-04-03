@@ -10,14 +10,14 @@ namespace AcuCafe
     {
         private static readonly Dictionary<string, Type> DrinkIngredients = new Dictionary<string, Type>();
 
-        public IDrinkIngredient Create(string drinkName)
+        public IDrinkIngredient Create(string ingredientName)
         {
-            if (DrinkIngredients.ContainsKey(drinkName))
+            if (DrinkIngredients.ContainsKey(ingredientName))
             {
-                return (IDrinkIngredient)Activator.CreateInstance(DrinkIngredients[drinkName]);
+                return (IDrinkIngredient)Activator.CreateInstance(DrinkIngredients[ingredientName]);
             }
 
-            return new DrinkIngredient("unknown", 0.0);
+            return new DrinkIngredient(ingredientName, 0.0); // Should we throw here?
         }
 
         public void RegisterDrinkIngredient(string name, Type t)
