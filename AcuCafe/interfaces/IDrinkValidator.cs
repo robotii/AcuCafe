@@ -2,9 +2,10 @@
 
 namespace AcuCafe.interfaces 
 {
-    interface IDrinkValidator
+    public interface IDrinkValidator
     {
         bool Validate(List<IDrinkIngredient> ingredients);
+        string[] AllowedIngredients { get; }
     }
 
 }

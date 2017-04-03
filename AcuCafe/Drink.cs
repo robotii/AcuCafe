@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using AcuCafe.interfaces;
+using AcuCafe.validators;
 
 namespace AcuCafe
 {
     public class Drink : IDrink
     {
+        protected static IDrinkValidator Validator = new DrinkValidator();
+
         static Drink()
         {
-            AllowedIngredients = new List<string>();
         }
 
         public Drink()
@@ -22,8 +24,6 @@ namespace AcuCafe
             Name = name;
             _cost = cost;
         }
-
-        protected static List<string> AllowedIngredients { get; }
 
         private readonly double _cost;
         private readonly List<IDrinkIngredient> _ingredients;
@@ -39,7 +39,7 @@ namespace AcuCafe
         {
             get
             {
-                return AllowedIngredients.Aggregate(Name, (current, allowedIngredient)
+                return Validator.AllowedIngredients.Aggregate(Name, (current, allowedIngredient)
                     => current + (_ingredients.Exists(item => item.Name == allowedIngredient) ? " with " : " without ") + allowedIngredient);
             }
         }
@@ -47,18 +47,11 @@ namespace AcuCafe
         public void AddIngredient(IDrinkIngredient ingredient)
         {
             _ingredients.Add(ingredient);
-
-            // Check if we added something wrong
-            if (!AllowedIngredients.Contains(ingredient.Name))
-                throw new Exception("We just ruined the " + Name + " by adding " + ingredient.Name);
         }
 
         public bool IsValid
         {
-            get
-            {
-                return true;
-            }
+            get { return Validator.Validate(_ingredients); }
         }
     }
 }

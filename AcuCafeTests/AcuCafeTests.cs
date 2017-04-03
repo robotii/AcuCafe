@@ -56,18 +56,9 @@ namespace AcuCafeTests
         public void TestRuinedEspresso()
         {
             IDrink d = AcuCafe.OrderDrink("Espresso", true, true);
-            try
-            {
-                d.AddIngredient(new DrinkIngredient("coconut", 0.5));
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual("We just ruined the Espresso by adding coconut", e.Message);
-                Assert.IsFalse(d.IsValid);
-                return;
-            }
+            d.AddIngredient(new DrinkIngredient("coconut", 0.5));
 
-            Assert.Fail("No exception thrown when adding coconut to the Espresso!");
+            Assert.IsFalse(d.IsValid);
         }
     }
 }
