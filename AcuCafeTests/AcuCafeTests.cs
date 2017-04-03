@@ -12,6 +12,7 @@ namespace AcuCafeTests
         private IDrinkFactory _drinkFactory;
         private IDrinkIngredientFactory _drinkIngredientFactory;
         private IBaristaInformer _baristaInformer;
+        private ILogger _logger;
 
         /// <summary>
         /// Make sure we have a clean environment before each test
@@ -22,12 +23,13 @@ namespace AcuCafeTests
             _drinkFactory = new DrinkFactory();
             _drinkIngredientFactory = new DrinkIngredientFactory();
             _baristaInformer = new TestBaristaInformer();
+            _logger = new TestLogger();
         }
 
         [TestMethod]
         public void TestOrderDrink()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new string[] { });
             Assert.IsTrue(d.IsValid);
         }
@@ -35,7 +37,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestPlainEspresso()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new string[] { });
             Assert.AreEqual(1.8, d.Cost());
             Assert.AreEqual("Espresso without milk without sugar", d.Description);
@@ -45,7 +47,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestEspressoWithMilk()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "milk" });
             Assert.AreEqual(2.3, d.Cost());
             Assert.AreEqual("Espresso with milk without sugar", d.Description);
@@ -55,7 +57,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestEspressoWithSugar()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "sugar" });
             Assert.AreEqual(2.3, d.Cost());
             Assert.AreEqual("Espresso without milk with sugar", d.Description);
@@ -65,7 +67,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestEspressoWithMilkAndSugar()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "milk", "sugar" });
             Assert.AreEqual(2.8, d.Cost());
             Assert.AreEqual("Espresso with milk with sugar", d.Description);
@@ -75,7 +77,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestRuinedEspresso()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "milk", "sugar" });
             d.AddIngredient(new DrinkIngredient("coconut", 0.5));
 
@@ -85,7 +87,7 @@ namespace AcuCafeTests
         [TestMethod]
         public void TestRuinedIceTea()
         {
-            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer);
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("IceTea", new[] { "milk" });
             Assert.IsFalse(d.IsValid);
         }
