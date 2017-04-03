@@ -17,7 +17,7 @@ namespace AcuCafe
                 return (IDrinkIngredient)Activator.CreateInstance(DrinkIngredients[ingredientName]);
             }
 
-            return new DrinkIngredient(ingredientName, 0.0); // Should we throw here?
+            return new DrinkIngredient(ingredientName, 0.0); // Should we throw here? It will be thrown out by the validator anyway
         }
 
         public void RegisterDrinkIngredient(string name, Type t)

@@ -20,10 +20,12 @@ namespace AcuCafe
             _informer = bi;
             _logger = logger;
 
+            // Ideally this would be done somewhere else, but we don't have time to build that somewhere else
             _drinkFactory.RegisterDrink("Espresso", typeof(Espresso));
             _drinkFactory.RegisterDrink("HotTea", typeof(Tea));
             _drinkFactory.RegisterDrink("IceTea", typeof(IceTea));
 
+            // Likewise for the ingredients, we register them here, but it really needs to be moved
             _drinkIngredientFactory.RegisterDrinkIngredient("milk", typeof(MilkIngredient));
             _drinkIngredientFactory.RegisterDrinkIngredient("sugar", typeof(SugarIngredient));
             _drinkIngredientFactory.RegisterDrinkIngredient("chocolate topping", typeof(ChocolateTopping));

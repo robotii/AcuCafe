@@ -17,7 +17,7 @@ namespace AcuCafe
                 return (IDrink)Activator.CreateInstance(_drinkTypes[drinkName]);
             }
 
-            return new Drink();
+            return new Drink(); // TODO: Should we throw an exception here?
         }
 
         public void RegisterDrink(string name, Type t)
