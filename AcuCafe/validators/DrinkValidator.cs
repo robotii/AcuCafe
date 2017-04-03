@@ -22,6 +22,6 @@ namespace AcuCafe.validators
             return true;
         }
 
-        public string[] AllowedIngredients { get; set; }
+        public string[] AllowedIngredients { get; protected set; }
     }
 }

@@ -93,6 +93,14 @@ namespace AcuCafeTests
         }
 
         [TestMethod]
+        public void TestGoodIceTea()
+        {
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
+            IDrink d = cafe.OrderDrink("IceTea", new[] { "sugar" });
+            Assert.IsTrue(d.IsValid);
+        }
+
+        [TestMethod]
         public void TestChocolateToppingOnEspresso()
         {
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
@@ -114,6 +122,14 @@ namespace AcuCafeTests
             d = cafe.OrderDrink("Espresso", new[] { "milk", "sugar", "chocolate topping" });
             Assert.IsTrue(d.IsValid);
             Assert.AreEqual(2.8, d.Cost());
+        }
+
+        [TestMethod]
+        public void TestHavingTea()
+        {
+            AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
+            IDrink d = cafe.OrderDrink("HotTea", new[] { "milk" });
+            Assert.IsTrue(d.IsValid);
         }
     }
 }

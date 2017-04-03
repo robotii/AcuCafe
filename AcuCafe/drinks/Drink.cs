@@ -7,11 +7,7 @@ namespace AcuCafe.drinks
 {
     public class Drink : IDrink
     {
-        protected static IDrinkValidator Validator = new DrinkValidator();
-
-        static Drink()
-        {
-        }
+        protected IDrinkValidator Validator = new DrinkValidator();
 
         public Drink()
         {
