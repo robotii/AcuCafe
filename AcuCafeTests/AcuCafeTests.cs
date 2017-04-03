@@ -63,6 +63,7 @@ namespace AcuCafeTests
             catch (Exception e)
             {
                 Assert.AreEqual("We just ruined the Espresso by adding coconut", e.Message);
+                Assert.IsFalse(d.IsValid);
                 return;
             }
 
