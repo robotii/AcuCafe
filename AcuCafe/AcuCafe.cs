@@ -10,11 +10,13 @@ namespace AcuCafe
     {
         private readonly IDrinkFactory _drinkFactory;
         private readonly IDrinkIngredientFactory _drinkIngredientFactory;
+        private readonly IBaristaInformer _informer;
 
-        public AcuCafe(IDrinkFactory df, IDrinkIngredientFactory dif)
+        public AcuCafe(IDrinkFactory df, IDrinkIngredientFactory dif, IBaristaInformer bi)
         {
             _drinkFactory = df;
             _drinkIngredientFactory = dif;
+            _informer = bi;
 
             _drinkFactory.RegisterDrink("Espresso", typeof(Espresso));
             _drinkFactory.RegisterDrink("HotTea", typeof(Tea));
@@ -27,7 +29,7 @@ namespace AcuCafe
         [Obsolete("Please use OrderDrink(string, IEnumerable<string>) instead")]
         public static IDrink OrderDrink(string type, bool hasMilk, bool hasSugar)
         {
-            AcuCafe cafe = new AcuCafe(new DrinkFactory(), new DrinkIngredientFactory());
+            AcuCafe cafe = new AcuCafe(new DrinkFactory(), new DrinkIngredientFactory(), new BaristaInformer());
             List<string> ingredients = new List<string>();
             if(hasMilk)
                 ingredients.Add("milk");
@@ -48,11 +50,11 @@ namespace AcuCafe
 
             try
             {
-                DrinkPreparer.Prepare(drink);
+                DrinkPreparer.Prepare(drink, _informer);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("We are unable to prepare your drink.");
+                _informer.Inform("We are unable to prepare your drink.");
                 System.IO.File.WriteAllText(@"c:\Error.txt", ex.ToString());
             }
 
