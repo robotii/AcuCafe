@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AcuCafe.ingredients;
+﻿using AcuCafe.ingredients;
 using AcuCafe.interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -59,6 +58,13 @@ namespace AcuCafeTests
             IDrink d = AcuCafe.OrderDrink("Espresso", new[] { "milk", "sugar" });
             d.AddIngredient(new DrinkIngredient("coconut", 0.5));
 
+            Assert.IsFalse(d.IsValid);
+        }
+
+        [TestMethod]
+        public void TestRuinedIceTea()
+        {
+            IDrink d = AcuCafe.OrderDrink("IceTea", new[] { "milk" });
             Assert.IsFalse(d.IsValid);
         }
     }

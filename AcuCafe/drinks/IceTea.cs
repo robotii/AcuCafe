@@ -7,9 +7,7 @@ namespace AcuCafe.drinks
 
         static IceTea()
         {
-            Validator = new DrinkValidator();
-            //AllowedIngredients.Add("milk");
-            //AllowedIngredients.Add("sugar");
+            Validator = new IceTeaValidator();
         }
         public IceTea() : base("Ice tea", 1.5)
         { }

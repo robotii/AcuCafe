@@ -57,6 +57,8 @@
     <Compile Include="drinks\Tea.cs" />
     <Compile Include="validators\DrinkValidator.cs" />
     <Compile Include="validators\EspressoValidator.cs" />
+    <Compile Include="validators\IceTeaValidator.cs" />
+    <Compile Include="validators\TeaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />

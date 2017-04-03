@@ -6,9 +6,7 @@ namespace AcuCafe.drinks
     {
         static Tea()
         {
-            Validator = new DrinkValidator();
-            //AllowedIngredients.Add("milk");
-            //AllowedIngredients.Add("sugar");
+            Validator = new TeaValidator();
         }
 
         public Tea() : base("Hot tea", 1.0)
