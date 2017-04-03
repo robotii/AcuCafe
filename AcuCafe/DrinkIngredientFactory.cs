@@ -8,13 +8,13 @@ namespace AcuCafe
 {
     public class DrinkIngredientFactory : IDrinkIngredientFactory
     {
-        private static readonly Dictionary<string, Type> DrinkTypes = new Dictionary<string, Type>();
+        private static readonly Dictionary<string, Type> DrinkIngredients = new Dictionary<string, Type>();
 
         public IDrinkIngredient Create(string drinkName)
         {
-            if (DrinkTypes.ContainsKey(drinkName))
+            if (DrinkIngredients.ContainsKey(drinkName))
             {
-                return (IDrinkIngredient)Activator.CreateInstance(DrinkTypes[drinkName]);
+                return (IDrinkIngredient)Activator.CreateInstance(DrinkIngredients[drinkName]);
             }
 
             return new DrinkIngredient("unknown", 0.0);
@@ -24,11 +24,11 @@ namespace AcuCafe
         {
             if (t.GetInterfaces().Contains(typeof(IDrinkIngredient)))
             {
-                DrinkTypes[name] = t;
+                DrinkIngredients[name] = t;
             }
             else
             {
-                throw new Exception("Cannot register drink that does not implement IDrink interface");
+                throw new Exception("Cannot register drink ingredient that does not implement IDrinkIngredient interface");
             }
         }
     }
