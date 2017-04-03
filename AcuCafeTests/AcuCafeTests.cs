@@ -98,22 +98,22 @@ namespace AcuCafeTests
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "chocolate topping"});
             Assert.IsTrue(d.IsValid);
-            Assert.AreEqual(1.5, d.Cost());
+            Assert.AreEqual(1.8, d.Cost());
 
             // Now try with milk
             d = cafe.OrderDrink("Espresso", new[] { "milk", "chocolate topping" });
             Assert.IsTrue(d.IsValid);
-            Assert.AreEqual(1.8, d.Cost());
+            Assert.AreEqual(2.3, d.Cost());
 
             // Now try with sugar
             d = cafe.OrderDrink("Espresso", new[] { "sugar", "chocolate topping" });
             Assert.IsTrue(d.IsValid);
-            Assert.AreEqual(1.8, d.Cost());
+            Assert.AreEqual(2.3, d.Cost());
 
             // Now try with milk and sugar
             d = cafe.OrderDrink("Espresso", new[] { "milk", "sugar", "chocolate topping" });
             Assert.IsTrue(d.IsValid);
-            Assert.AreEqual(2.3, d.Cost());
+            Assert.AreEqual(2.8, d.Cost());
         }
     }
 }
