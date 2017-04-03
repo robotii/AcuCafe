@@ -7,8 +7,15 @@ namespace AcuCafe
     {
         public static void Prepare(IDrink drink, IBaristaInformer informer)
         {
-            string message = "We are preparing the following drink for you: " + drink.Description;
-            informer.Inform(message);
+            if (drink.IsValid)
+            {
+                string message = "We are preparing the following drink for you: " + drink.Description;
+                informer.Inform(message);
+            }
+            else
+            {
+                throw new Exception("We could not prepare the following drink: " + drink.Description);
+            }
         }
     }
 }
