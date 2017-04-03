@@ -44,6 +44,7 @@
     <Compile Include="BaristaInformer.cs" />
     <Compile Include="drinks\Drink.cs" />
     <Compile Include="DrinkFactory.cs" />
+    <Compile Include="ingredients\ChocolateTopping.cs" />
     <Compile Include="ingredients\DrinkIngredient.cs" />
     <Compile Include="DrinkIngredientFactory.cs" />
     <Compile Include="DrinkPreparer.cs" />

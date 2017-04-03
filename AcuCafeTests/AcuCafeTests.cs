@@ -40,7 +40,7 @@ namespace AcuCafeTests
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new string[] { });
             Assert.AreEqual(1.8, d.Cost());
-            Assert.AreEqual("Espresso without milk without sugar", d.Description);
+            Assert.AreEqual("Espresso without milk without sugar without chocolate topping", d.Description);
             Assert.IsTrue(d.IsValid);
         }
 
@@ -50,7 +50,7 @@ namespace AcuCafeTests
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "milk" });
             Assert.AreEqual(2.3, d.Cost());
-            Assert.AreEqual("Espresso with milk without sugar", d.Description);
+            Assert.AreEqual("Espresso with milk without sugar without chocolate topping", d.Description);
             Assert.IsTrue(d.IsValid);
         }
 
@@ -60,7 +60,7 @@ namespace AcuCafeTests
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "sugar" });
             Assert.AreEqual(2.3, d.Cost());
-            Assert.AreEqual("Espresso without milk with sugar", d.Description);
+            Assert.AreEqual("Espresso without milk with sugar without chocolate topping", d.Description);
             Assert.IsTrue(d.IsValid);
         }
 
@@ -70,7 +70,7 @@ namespace AcuCafeTests
             AcuCafe cafe = new AcuCafe(_drinkFactory, _drinkIngredientFactory, _baristaInformer, _logger);
             IDrink d = cafe.OrderDrink("Espresso", new[] { "milk", "sugar" });
             Assert.AreEqual(2.8, d.Cost());
-            Assert.AreEqual("Espresso with milk with sugar", d.Description);
+            Assert.AreEqual("Espresso with milk with sugar without chocolate topping", d.Description);
             Assert.IsTrue(d.IsValid);
         }
 

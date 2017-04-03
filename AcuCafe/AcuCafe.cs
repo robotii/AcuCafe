@@ -26,6 +26,7 @@ namespace AcuCafe
 
             _drinkIngredientFactory.RegisterDrinkIngredient("milk", typeof(MilkIngredient));
             _drinkIngredientFactory.RegisterDrinkIngredient("sugar", typeof(SugarIngredient));
+            _drinkIngredientFactory.RegisterDrinkIngredient("chocolate topping", typeof(ChocolateTopping));
         }
 
         /// <summary>

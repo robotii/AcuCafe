@@ -7,7 +7,8 @@
             AllowedIngredients = new []
             {
                 "milk",
-                "sugar"
+                "sugar",
+                "chocolate topping"
             };
         }
     }
