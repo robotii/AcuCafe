@@ -1,6 +1,6 @@
 ﻿namespace AcuCafe.validators
 {
-    class EspressoValidator : DrinkValidator
+    public class EspressoValidator : DrinkValidator
     {
         public EspressoValidator()
         {

@@ -4,7 +4,7 @@ using AcuCafe.interfaces;
 
 namespace AcuCafe.validators
 {
-    class DrinkValidator : IDrinkValidator
+    public class DrinkValidator : IDrinkValidator
     {
         public DrinkValidator()
         {
