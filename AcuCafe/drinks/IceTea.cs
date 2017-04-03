@@ -1,17 +1,17 @@
-using AcuCafe.validators;
+﻿using AcuCafe.validators;
 
-namespace AcuCafe
+namespace AcuCafe.drinks
 {
-    public class Tea : Drink
+    public class IceTea : Drink
     {
-        static Tea()
+
+        static IceTea()
         {
             Validator = new DrinkValidator();
             //AllowedIngredients.Add("milk");
             //AllowedIngredients.Add("sugar");
         }
-
-        public Tea() : base("Hot tea", 1.0)
+        public IceTea() : base("Ice tea", 1.5)
         { }
     }
 }

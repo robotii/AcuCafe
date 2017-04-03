@@ -41,18 +41,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcuCafe.cs" />
-    <Compile Include="Drink.cs" />
+    <Compile Include="drinks\Drink.cs" />
     <Compile Include="DrinkFactory.cs" />
-    <Compile Include="DrinkIngredient.cs" />
+    <Compile Include="ingredients\DrinkIngredient.cs" />
     <Compile Include="DrinkIngredientFactory.cs" />
     <Compile Include="DrinkPreparer.cs" />
-    <Compile Include="Espresso.cs" />
-    <Compile Include="IceTea.cs" />
+    <Compile Include="drinks\Espresso.cs" />
+    <Compile Include="drinks\IceTea.cs" />
+    <Compile Include="ingredients\MilkIngredient.cs" />
+    <Compile Include="ingredients\SugarIngredient.cs" />
     <Compile Include="interfaces\IDrink.cs" />
     <Compile Include="interfaces\IDrinkIngredient.cs" />
     <Compile Include="interfaces\IDrinkValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tea.cs" />
+    <Compile Include="drinks\Tea.cs" />
     <Compile Include="validators\DrinkValidator.cs" />
     <Compile Include="validators\EspressoValidator.cs" />
   </ItemGroup>

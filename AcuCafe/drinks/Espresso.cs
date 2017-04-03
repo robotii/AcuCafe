@@ -1,6 +1,6 @@
 using AcuCafe.validators;
 
-namespace AcuCafe
+namespace AcuCafe.drinks
 {
     public class Espresso : Drink
     {

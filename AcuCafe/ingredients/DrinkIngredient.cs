@@ -1,6 +1,6 @@
 ﻿using AcuCafe.interfaces;
 
-namespace AcuCafe
+namespace AcuCafe.ingredients
 {
     public class DrinkIngredient : IDrinkIngredient
     {

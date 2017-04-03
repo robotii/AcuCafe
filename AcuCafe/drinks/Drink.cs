@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AcuCafe.interfaces;
 using AcuCafe.validators;
 
-namespace AcuCafe
+namespace AcuCafe.drinks
 {
     public class Drink : IDrink
     {
